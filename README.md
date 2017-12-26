@@ -1,3 +1,3 @@
-# EMbedded Image Loader -EMIL
+# EMbedded Image Loader - EMIL
 
 STATUS: BEING EVALUATED

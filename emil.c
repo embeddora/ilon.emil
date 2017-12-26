@@ -30,16 +30,16 @@
 //++#define JUMP_TO_ADDR 	0x8051dc00
 
 /* U2's base address in non-cached memory region. Good for VxWorks (cached) and for Linux kernel regions */
-#define UART2_ADDR      0xB1300000 
+#define UART2_ADDR      0xB1300000
 
 /* Offset of Line Status Register */
-#define UART_LSR	0x1C	
+#define UART_LSR	0x1C
 
 /* Offset of Transmit buffer */
 #define UART_TX		4
 
 /* Transmit-hold-register is empty */
-#define UART_LSR_THRE	0x20	
+#define UART_LSR_THRE	0x20
 
 
 typedef  void (*VPF) () ;
@@ -65,7 +65,7 @@ unsigned long iLen;
 
 	_SerialPuts(0, "[EMIL START] First instruction address is <");
 	_SerialWriteHexOfDepth(0, JUMP_TO_ADDR, 8);
-	_SerialPuts(0, ">, now jumping over there [EMIL END] \n\n\n"); 
+	_SerialPuts(0, ">, now jumping over there [EMIL END] \n\n\n");
 	pFunc = (VPF) ( JUMP_TO_ADDR /* kernel_entry */);
 	pFunc();
 
@@ -80,7 +80,7 @@ unsigned long iLen;
 }
 
 /* Own memcpy() ; relacating 'unsigned long' memory cells witin volatile(cached) memory */
-void memcp(volatile unsigned long * __dest, volatile unsigned long * __src, int __n) 
+void memcp(volatile unsigned long * __dest, volatile unsigned long * __src, int __n)
 {
 	while (__n--)
 		*__dest++ = * __src++;
@@ -103,10 +103,10 @@ int iCnt; unsigned long ulSome;
 
 	*uart_tx = (unsigned long)c;/* __asm__ __volatile__ (".set mips2; sync; .set mips0": : :"memory"); */
 
-	iCnt = 0xFF;while (iCnt--) { ulSome =0x12345678;  } ;		
+	iCnt = 0xFF;while (iCnt--) { ulSome =0x12345678;  } ;
 }
 
-/* write string representing a hexadecimal number 'n' into serial port 'port' */ 
+/* write string representing a hexadecimal number 'n' into serial port 'port' */
 void _SerialWriteHexOfDepth(int port, unsigned long n, unsigned long depth)
 {
 #if (1)
@@ -126,7 +126,7 @@ void _SerialWriteHexOfDepth(int port, unsigned long n, unsigned long depth)
 	/* make corresponding char '0' - '9', otherwise */
         n += '0';
 	
-	/* and put this char into serial port 'port' */	
+	/* and put this char into serial port 'port' */
 	serial0_putc( (unsigned char)n );
     }
 #endif /* (0) */
@@ -140,7 +140,7 @@ void _SerialWriteNumDecimal(int port, unsigned long n)
     /* if decimal to be emitted stil not representable by single lowest digit */ 
     if (n > 9)
     {
-	/* then recursively emit everything but its lowest digit */	
+	/* then recursively emit everything but its lowest digit */
         _SerialWriteNumDecimal(port, n / 10);
 	
 	/* now take only this lowest digit */
